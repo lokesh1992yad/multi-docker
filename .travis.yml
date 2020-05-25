@@ -3,13 +3,23 @@ services:
     - docker
 
 before_install:
-    - docker build -t lokesh/react-test -f ./client/Dockerfile.dev ./client
+    - docker build -t  lokesh1992yad/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run lokesh/react-test npm test -- --coverage
+    - docker run  lokesh1992yad/react-test npm test -- --coverage
 
 after_success:
-    - docker build -t lokesh/multi-client ./client
-    - docker build -t lokesh/multi-nginx ./nginx
-    - docker build -t lokesh/multi-server ./server
-    - docker build -t lokesh/multi-worker ./worker
+    - docker build -t  lokesh1992yad/multi-client ./client
+    - docker build -t  lokesh1992yad/multi-nginx ./nginx
+    - docker build -t  lokesh1992yad/multi-server ./server
+    - docker build -t  lokesh1992yad/multi-worker ./worker
+
+#take those image into docker hub
+#first login in docker cli
+-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password--stdin
+
+#now push the images in the hub
+- docker push  lokesh1992yad/multi-client
+- docker push  lokesh1992yad/multi-nginx
+- docker push  lokesh1992yad/multi-server
+- docker push  lokesh1992yad/multi-worker
